@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "ChatGPT Tree Manager",
+  "version": "1.0.2",
+  "description": "Organize AI conversations from ChatGPT, Claude, Gemini, and more in a hierarchical tree structure",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://chatgpt.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://www.perplexity.ai/*",
+    "https://grok.x.ai/*",
+    "https://chat.deepseek.com/*"
+  ],
+  "action": {
+    "default_title": "ChatGPT Tree Manager"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "background": {
+    "service_worker": "background-simple.js"
+  },
+  "content_scripts": [{
+    "matches": [
+      "https://chat.openai.com/*", 
+      "https://chatgpt.com/*",
+      "https://claude.ai/*",
+      "https://gemini.google.com/*",
+      "https://www.perplexity.ai/*",
+      "https://grok.x.ai/*",
+      "https://chat.deepseek.com/*"
+    ],
+    "js": ["content.js"],
+    "run_at": "document_end"
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

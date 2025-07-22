@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-LLM URL Linking Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #007aff;
+        }
+        .provider {
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        .provider h4 {
+            margin: 0 0 8px 0;
+            color: #333;
+        }
+        .url-pattern {
+            font-family: Monaco, monospace;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status.working { background: #d4edda; color: #155724; }
+        .status.testing { background: #fff3cd; color: #856404; }
+        .steps {
+            background: #e7f3ff;
+            border-left: 4px solid #007aff;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Multi-LLM URL Linking Test Guide</h1>
+    
+    <div class="steps">
+        <h3>Test Instructions:</h3>
+        <ol>
+            <li>Install the Chrome extension via chrome://extensions/ (load unpacked)</li>
+            <li>Open the side panel (right-click extension icon → Open side panel)</li>
+            <li>Create a test folder</li>
+            <li>For each LLM provider below:
+                <ul>
+                    <li>Click + next to the folder</li>
+                    <li>Enter a test chat name</li>
+                    <li>Select the LLM from the modal</li>
+                    <li>Verify the correct website opens</li>
+                    <li>Start a conversation on that site</li>
+                    <li>Check if the chat name becomes blue/clickable in the extension</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>LLM Providers & URL Patterns</h2>
+        
+        <div class="provider">
+            <h4>OpenAI ChatGPT <span class="status working">Working ✓</span></h4>
+            <p><strong>Opens:</strong> <span class="url-pattern">https://chatgpt.com/</span></p>
+            <p><strong>Conversation Pattern:</strong> <span class="url-pattern">chatgpt.com/c/{uuid}</span></p>
+            <p><strong>Title Detection:</strong> H1 elements, document title</p>
+        </div>
+
+        <div class="provider">
+            <h4>Anthropic Claude <span class="status testing">Testing Required</span></h4>
+            <p><strong>Opens:</strong> <span class="url-pattern">https://claude.ai/chat/</span></p>
+            <p><strong>Conversation Pattern:</strong> <span class="url-pattern">claude.ai/chat/{uuid}</span></p>
+            <p><strong>Title Detection:</strong> H1, conversation-title, main h1</p>
+        </div>
+
+        <div class="provider">
+            <h4>Google Gemini <span class="status testing">Testing Required</span></h4>
+            <p><strong>Opens:</strong> <span class="url-pattern">https://gemini.google.com/app</span></p>
+            <p><strong>Conversation Pattern:</strong> <span class="url-pattern">gemini.google.com/app</span></p>
+            <p><strong>Title Detection:</strong> H1, conversation-title elements</p>
+        </div>
+
+        <div class="provider">
+            <h4>Perplexity <span class="status testing">Testing Required</span></h4>
+            <p><strong>Opens:</strong> <span class="url-pattern">https://www.perplexity.ai/</span></p>
+            <p><strong>Conversation Pattern:</strong> <span class="url-pattern">perplexity.ai/search/{query}</span></p>
+            <p><strong>Title Detection:</strong> H1, search-title elements</p>
+        </div>
+
+        <div class="provider">
+            <h4>xAI Grok <span class="status testing">Testing Required</span></h4>
+            <p><strong>Opens:</strong> <span class="url-pattern">https://grok.x.ai/</span></p>
+            <p><strong>Conversation Pattern:</strong> <span class="url-pattern">grok.x.ai/chat</span></p>
+            <p><strong>Title Detection:</strong> H1, chat-title elements</p>
+        </div>
+
+        <div class="provider">
+            <h4>DeepSeek <span class="status testing">Testing Required</span></h4>
+            <p><strong>Opens:</strong> <span class="url-pattern">https://chat.deepseek.com/</span></p>
+            <p><strong>Conversation Pattern:</strong> <span class="url-pattern">chat.deepseek.com/chat</span></p>
+            <p><strong>Title Detection:</strong> H1, conversation-title elements</p>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Expected Behavior</h2>
+        <ul>
+            <li><strong>Tab Creation:</strong> Extension creates new tab with correct LLM website</li>
+            <li><strong>Conversation Detection:</strong> Content script detects when conversation starts</li>
+            <li><strong>URL Linking:</strong> Extension links the conversation URL to the chat entry</li>
+            <li><strong>Visual Feedback:</strong> Chat name becomes blue and clickable</li>
+            <li><strong>Direct Access:</strong> Clicking chat name opens the actual conversation</li>
+            <li><strong>LLM Badge:</strong> Shows which AI provider the chat uses</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Troubleshooting</h2>
+        <ul>
+            <li><strong>Chat not linking?</strong> Check browser console for errors, ensure content script is running</li>
+            <li><strong>Wrong website opens?</strong> Verify LLM selection in modal matches opened site</li>
+            <li><strong>No LLM badge?</strong> Check that llm and llm_name are saved in chat data</li>
+            <li><strong>Content script not working?</strong> Reload extension and target website</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Technical Details</h2>
+        <p>The extension uses several components to achieve URL linking:</p>
+        <ul>
+            <li><strong>Background Script:</strong> Monitors tab updates and manages pending links</li>
+            <li><strong>Content Script:</strong> Runs on AI websites to detect conversations</li>
+            <li><strong>Pending Link System:</strong> Connects newly created chats to opened tabs</li>
+            <li><strong>URL Validation:</strong> Ensures only valid AI provider URLs are linked</li>
+        </ul>
+    </div>
+
+    <script>
+        // Simple test helper
+        console.log('Multi-LLM URL Linking Test Page Loaded');
+        console.log('Extension should be loaded at chrome://extensions/');
+        console.log('Test each LLM provider systematically');
+    </script>
+</body>
+</html>
